@@ -19,7 +19,7 @@ export default class Settings {
       if (!this.defaultSettings.has(key)) {
         throw new Error(1);
       }
-      if (this.possibleSettings.get(key).find(x => x === value) === undefined) {
+      if (!this.possibleSettings.get(key).includes(value)) {
         throw new Error(2);
       } else {
         this.userSettings.set(key, value);
@@ -33,11 +33,11 @@ export default class Settings {
   }
 
   get settings() {
-    this._settings = this.defaultSettings;
+    const settings = this.defaultSettings;
     for (const key of this.userSettings.keys()) {
-      this._settings.set(key, this.userSettings.get(key));
+      settings.set(key, this.userSettings.get(key));
     }
 
-    return this._settings;
+    return settings;
   }
 }
